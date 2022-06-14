@@ -479,7 +479,7 @@ class LexicallyConstrainedBeamSearch(Search):
 
         # STEP 6: Assign IDs round-robin across banks, sort, and
         # truncate. Now that the candidates are sorted by (bank,
-        # score) and uniqed, we dynamically allocate the {beam_size}
+        # score) and unique, we dynamically allocate the {beam_size}
         # beam by striping across the candidates. These stripes will
         # be used as sort keys to do round-robin selection. This is
         # accomplished in a single pass with offsets. Sorting by

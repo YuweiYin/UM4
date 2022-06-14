@@ -163,7 +163,7 @@ class IndexedDataset(FairseqDataset):
         if not self.data_file:
             self.read_data(self.path)
         self.check_index(i)
-        tensor_size = self.sizes[self.dim_offsets[i] : self.dim_offsets[i + 1]]
+        tensor_size = self.sizes[self.dim_offsets[i]: self.dim_offsets[i + 1]]
         a = np.empty(tensor_size, dtype=self.dtype)
         self.data_file.seek(self.data_offsets[i] * self.element_size)
         self.data_file.readinto(a)
@@ -217,7 +217,7 @@ class IndexedCachedDataset(IndexedDataset):
         for i in indices:
             self.cache_index[i] = ptx
             size = self.data_offsets[i + 1] - self.data_offsets[i]
-            a = self.cache[ptx : ptx + size]
+            a = self.cache[ptx: ptx + size]
             self.data_file.seek(self.data_offsets[i] * self.element_size)
             self.data_file.readinto(a)
             ptx += size
@@ -229,10 +229,10 @@ class IndexedCachedDataset(IndexedDataset):
     @lru_cache(maxsize=8)
     def __getitem__(self, i):
         self.check_index(i)
-        tensor_size = self.sizes[self.dim_offsets[i] : self.dim_offsets[i + 1]]
+        tensor_size = self.sizes[self.dim_offsets[i]: self.dim_offsets[i + 1]]
         a = np.empty(tensor_size, dtype=self.dtype)
         ptx = self.cache_index[i]
-        np.copyto(a, self.cache[ptx : ptx + a.size])
+        np.copyto(a, self.cache[ptx: ptx + a.size])
         item = torch.from_numpy(a).long()
         if self.fix_lua_indexing:
             item -= 1  # subtract 1 for 0-based indexing
@@ -527,8 +527,8 @@ def get_indexed_dataset_to_local(path):
         f"{local_index_path} and {local_data_path}"
     )
 
-    local_path = local_data_path[:-4]  # stripping surfix ".bin"
-    assert local_path == local_index_path[:-4]  # stripping surfix ".idx"
+    local_path = local_data_path[:-4]  # stripping suffix ".bin"
+    assert local_path == local_index_path[:-4]  # stripping suffix ".idx"
     return local_path
 
 

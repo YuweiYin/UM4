@@ -147,37 +147,11 @@ def collate(
             if check_alignment(alignment, src_len, tgt_len)
         ]
         batch["alignments"] = alignments
-        # bsz, tgt_sz = batch["target"].shape
-        # src_sz = batch["net_input"]["src_tokens"].shape[1]
-        #
-        # offsets = torch.zeros((len(sort_order), 2), dtype=torch.long)
-        # offsets[:, 1] += torch.arange(len(sort_order), dtype=torch.long) * tgt_sz
-        # if left_pad_source:
-        #     offsets[:, 0] += src_sz - src_lengths
-        # if left_pad_target:
-        #     offsets[:, 1] += tgt_sz - tgt_lengths
-        #
-        # alignments = [
-        #     alignment + offset
-        #     for align_idx, offset, src_len, tgt_len in zip(
-        #         sort_order, offsets, src_lengths, tgt_lengths
-        #     )
-        #     for alignment in [samples[align_idx]["alignment"].view(-1, 2)]
-        #     if check_alignment(alignment, src_len, tgt_len)
-        # ]
-        #
-        # if len(alignments) > 0:
-        #     alignments = torch.cat(alignments, dim=0)
-        #     align_weights = compute_alignment_weights(alignments)
-        #
-        #     batch["alignments"] = alignments
-        #     batch["align_weights"] = align_weights
 
     if samples[0].get("constraints", None) is not None:
         # Collate the packed constraints across the samples, padding to
         # the length of the longest sample.
         lens = [sample.get("constraints").size(0) for sample in samples]
-        # max_len = max(lens)
         constraints = torch.zeros((len(samples), max(lens))).long()
         for i, sample in enumerate(samples):
             constraints[i, 0: lens[i]] = samples[i].get("constraints")

@@ -35,8 +35,8 @@ def write_version_py():
         pass
 
     # write version info to fairseq/version.py
-    with open(os.path.join("fairseq", "version.py"), "w") as f:
-        f.write('__version__ = "{}"\n'.format(version))
+    with open(os.path.join("fairseq", "version.py"), "w") as f_v:
+        f_v.write('__version__ = "{}"\n'.format(version))
     return version
 
 

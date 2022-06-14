@@ -2,6 +2,28 @@
 
 ![picture](https://yuweiyin.github.io/files/publications/2022-07-23-IJCAI-MNMT-UM4.png)
 
+## Abstract
+
+Most translation tasks among languages belong to
+the zero-resource translation problem where parallel
+corpora are unavailable. Multilingual neural machine
+translation (MNMT) enables one-pass translation
+using shared semantic space for all languages
+compared to the two-pass pivot translation but often
+underperforms the pivot-based method. In this paper,
+we propose a novel method, named as **U**nified
+**M**ultilingual **M**ultiple teacher-student **M**odel for
+N**M**T (**UM4**). Our method unifies source-teacher,
+target-teacher, and pivot-teacher models to guide
+the student model for the zero-resource translation.
+The source teacher and target teacher force the student
+to learn the direct source to target translation
+by the distilled knowledge on both source and target
+sides. The monolingual corpus is further leveraged
+by the pivot-teacher model to enhance the
+student model. Experimental results demonstrate
+that our model of 72 directions significantly outperforms
+previous methods on the WMT benchmark.
 
 ## Data
 
@@ -14,7 +36,7 @@
   * English (En) is treated as the pivot language. The other 8 languages form (8 * (8 - 1)) = 56 zero-resource translation directions.
 * **Bitext Data**
   * All the bitext training data (e.g., Fr-En, Ro-En, En-Hi) are from the WMT benchmark of recent years.
-  * For 72 = (9 * (9 - 1)) translation directions of 9 languages, we use the same valid and test sets from TED Talks as [the previous work](http://phontron.com/data/ted_talks.tar.gz) for evaluation.
+  * For 72 = (9 * (9 - 1)) translation directions of 9 languages, [TED Talk dataset](http://phontron.com/data/ted_talks.tar.gz) is used as the valid and test sets.
 * **Monolingual Data**
   * The English monolingual data is collected from [NewsCrawl](http://data.statmt.org/news-crawl) and randomly sample 1 million English sentences.
 
@@ -26,14 +48,14 @@
 * NVIDIA GPUs and [NCCL](https://github.com/NVIDIA/nccl)
 * [Fairseq](https://github.com/pytorch/fairseq): 1.0.0
 
-``` bash
+```bash
 cd UM4/fairseq
 pip install --editable ./
 ```
 
 * **For faster training** install NVIDIA's [apex](https://github.com/NVIDIA/apex) library:
 
-``` bash
+```bash
 git clone https://github.com/NVIDIA/apex
 cd apex
 pip install -v --no-cache-dir --global-option="--cpp_ext" --global-option="--cuda_ext" \
@@ -93,10 +115,9 @@ python -m torch.distributed.launch \
 ```
 
 
-## Evaluation
+## Inference & Evaluation
 
 * **Beam Search**: (during the inference) beam size = 5; length penalty = 1.0.
-* **Ensemble**: the parameters of last 5 checkpoints are averaged.
 * **Metrics**: the case-sensitive detokenized BLEU using sacreBLEU:
   * BLEU+case.mixed+lang.{src}-{tgt}+numrefs.1+smooth.exp+tok.13a+version.1.3.1
 

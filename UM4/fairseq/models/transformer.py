@@ -580,7 +580,6 @@ class TransformerDecoder(FairseqIncrementalDecoder):
         self.max_target_positions = args.max_target_positions
 
         self.embed_tokens = embed_tokens
-
         self.embed_scale = 1.0 if args.no_scale_embedding else math.sqrt(embed_dim)
 
         if not args.adaptive_input and args.quant_noise_pq > 0:
