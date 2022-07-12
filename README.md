@@ -124,7 +124,7 @@ python -m torch.distributed.launch \
 
 ## Citation
 
-<!-- Paper Link:  -->
+* arXiv: https://arxiv.org/abs/2207.04900
 
 ```bibtex
 @inproceedings{um4,
