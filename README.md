@@ -79,7 +79,7 @@ Tr | 10.2M | 10.5M | 4.8M | 5.0M | 0.9M | 0.7M | 0.4M | -
 * [Fairseq](https://github.com/pytorch/fairseq): 1.0.0
 
 ```bash
-cd UM4/fairseq
+cd UM4
 pip install --editable ./
 ```
 
