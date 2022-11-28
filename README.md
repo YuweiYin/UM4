@@ -1,6 +1,6 @@
 # UM4: Unified Multilingual Multiple Teacher-Student Model for Zero-Resource Neural Machine Translation
 
-![picture](https://yuweiyin.github.io/files/publications/2022-07-23-IJCAI-MNMT-UM4.png)
+![picture](https://www.yuweiyin.com/files/img/2022-07-23-IJCAI-UM4.png)
 
 ## Abstract
 
